@@ -34,6 +34,9 @@ namespace com.tweetapp
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAccountRepository , AccountRepository>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITweetService, TweetService>();
+            services.AddScoped<ITweetRepository, TweetRepository>();
+
             // JSON Serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
