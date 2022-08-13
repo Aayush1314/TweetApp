@@ -89,7 +89,7 @@ namespace com.tweetapp.Controllers
 
         [HttpPut("/api/v1.0/tweets/{username}/like/{id}")]
         [Authorize]
-        public async Task<ActionResult<int>> LikeTweet(string username, string id)
+        public async Task<ActionResult> LikeTweet(string username, string id)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace com.tweetapp.Controllers
                 {
                     return BadRequest(new {Response = "User/Tweet not found"});
                 }
-                return likeCount;
+                return Ok(new { Response = "You liked this!!!"});
             }
             catch (Exception e)
             {
