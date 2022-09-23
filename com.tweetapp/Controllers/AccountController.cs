@@ -68,7 +68,7 @@ namespace com.tweetapp.Controllers
             }
         }
 
-        [HttpGet("/api/v/1.0/tweets/user/search/{username}")]
+        [HttpGet("/api/v1.0/tweets/user/search/{username}")]
         public ActionResult<List<UserSearchDto>> GetUserByUsername(string username)
         {
             try

@@ -36,11 +36,11 @@ namespace com.tweetapp.Controllers
                 var response = await _replyService.PostReply(username, id, replyDto);
                 if (response != null)
                 {
-                    return Ok(new { Response = response });
+                    return Ok(response);
                 }
                 return BadRequest("User/Tweet not Found");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogTrace(e.StackTrace);
                 return StatusCode(500, new { Message = "Internal Server Error." });

@@ -6,6 +6,7 @@ using com.tweetapp.Model;
 using com.tweetapp.Services;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace com.tweetapp.Repository
@@ -27,18 +28,36 @@ namespace com.tweetapp.Repository
 
         }
 
-        public async Task<string> PostReply(string userId, string tweetId, ReplyDto replyDto)
+        public async Task<TweetDto> PostReply(string username, string tweetId, ReplyDto replyDto)
         {
-            await _replyCollection.InsertOneAsync( new Reply
+            var reply = new Reply
             {
-                likeCount = 0,
                 reply = replyDto.reply,
                 replyDateTime = DateTime.Now.ToString(),
-                tags = replyDto.tags,
-                userId = ObjectId.Parse(userId),
+                username = username,
                 refId = ObjectId.Parse(tweetId)
-            });
-            return "Reply added successfully";
+            };
+            await _replyCollection.InsertOneAsync( reply);
+
+            await _tweetsCollection.UpdateOneAsync(t => t.Id == ObjectId.Parse(tweetId), Builders<Tweet>.Update.Push("replyList", reply.Id));
+
+            var tweet = await _tweetsCollection.Aggregate().
+                Match(t => t.Id == ObjectId.Parse(tweetId)).
+                Lookup("Users", "userId", "_id", "user").
+                Lookup("Replies", "replyList", "_id", "replies").
+                Project(new BsonDocument
+                {
+                    { "TweetId",1 },
+                    { "tweet", 1},
+                    {"tweetDate", 1 },
+                    {"likeCount",1 },
+                    {"tags", 1 },
+                    {"user", 1 },
+                    {"replies", 1 }
+                }).FirstOrDefaultAsync();
+            var tweetDto = BsonSerializer.Deserialize<TweetDto>(tweet);
+            Console.WriteLine(tweetDto);
+            return tweetDto;
         }
     }
 }

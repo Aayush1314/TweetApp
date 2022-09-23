@@ -42,6 +42,7 @@ namespace com.tweetapp
             services.AddScoped<IReplyRepository, ReplyRepository>();
             services.AddScoped<IReplyService, ReplyService>();
 
+            services.AddCors();
 
             // JSON Serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -114,10 +115,11 @@ namespace com.tweetapp
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tweet APP");
                 });
             }
-
+            //
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthentication();
             app.UseAuthorization();

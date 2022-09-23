@@ -6,7 +6,7 @@ namespace com.tweetapp.Interfaces
 {
     public interface IReplyRepository
     {
-        public Task<string> PostReply(string userId, string tweetId, ReplyDto replyDto);
+        public Task<TweetDto> PostReply(string userId, string tweetId, ReplyDto replyDto);
 
     }
 }

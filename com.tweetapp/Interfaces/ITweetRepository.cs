@@ -12,7 +12,7 @@ namespace com.tweetapp.Interfaces
         Task<List<TweetDto>> GetUserTweets(string userId);
         Task<TweetPostDto> PostTweet(TweetPostDto tweetPostDto, ObjectId userId);
         Task<TweetDto> GetTweetById(string username, string id);
-        Task<TweetDto> UpdateTweet(string username, string id, TweetDto tweetDto);
+        Task<string> UpdateTweet(string username, string id, EditTweetDto editTweetDto);
         Task<string> DeleteTweet( string id);
         Task<int> LikeTweet(string username, string id);
     }

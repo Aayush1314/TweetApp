@@ -40,6 +40,7 @@ namespace com.tweetapp.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 _logger.LogTrace(e.StackTrace);
                 return StatusCode(500, new { Message = "Internal Server Error." });
             }
@@ -68,15 +69,15 @@ namespace com.tweetapp.Controllers
 
         [HttpPut("/api/v1.0/tweets/{username}/update/{id}")]
         [Authorize]
-        public async Task<ActionResult<TweetDto>> UpdateTweet(string username, string id, TweetDto tweetDto) {
+        public async Task<ActionResult<string>> UpdateTweet(string username, string id, EditTweetDto editTweetDto) {
 
             try
             {
                 //Find User bu Username
 
                 //Update Tweet
-                await _tweetService.UpdateTweet(tweetDto, username, id);
-                return Ok(tweetDto);
+                await _tweetService.UpdateTweet(editTweetDto, username, id);
+                return Ok(editTweetDto);
             }
             catch(Exception e)
             {
@@ -133,7 +134,7 @@ namespace com.tweetapp.Controllers
                 {
                     return BadRequest("User not found");
                 }
-                return response;
+                return Ok(new {message=response});
             }
             catch (Exception e)
             {

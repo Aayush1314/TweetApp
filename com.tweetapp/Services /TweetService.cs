@@ -61,10 +61,10 @@ namespace com.tweetapp.Services
             return null;
         }
 
-        public async Task<TweetDto> UpdateTweet(TweetDto tweetDto,string username, string id)
+        public async Task<string> UpdateTweet(EditTweetDto editTweetDto, string username, string id)
         {
-            TweetDto tweet = await _tweetRepository.UpdateTweet(username, id, tweetDto);
-            return tweet;
+            return await _tweetRepository.UpdateTweet(username, id, editTweetDto);
+            
         }
     }
 }

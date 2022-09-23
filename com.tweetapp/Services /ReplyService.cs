@@ -19,7 +19,7 @@ namespace com.tweetapp.Services
             _tweetRepository = tweetRepository;
         }
 
-        public async Task<string> PostReply(string username, string tweetId, ReplyDto replyDto)
+        public async Task<TweetDto> PostReply(string username, string tweetId, ReplyDto replyDto)
         {
             var user = await _accountRepository.GetUserByExactUsername(username);
             var tweet = await _tweetRepository.GetTweetById(username, tweetId);
@@ -28,7 +28,7 @@ namespace com.tweetapp.Services
                 return null;
             }
 
-            return await _replyRepository.PostReply((user.userID).ToString(), tweetId, replyDto);
+            return await _replyRepository.PostReply(user.username, tweetId, replyDto);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using MongoDB.Bson;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace com.tweetapp.Model
 {
@@ -13,6 +14,7 @@ namespace com.tweetapp.Model
         public string tweetDate { get; set; }
 
         public ObjectId userId { get; set; }
+        public List<ObjectId> replyList { get; set; } = new List<ObjectId>();
         public int likeCount { get; set; }
         public string[] tags { get; set; }
     }

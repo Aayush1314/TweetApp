@@ -6,7 +6,7 @@ namespace com.tweetapp.DTO
 {
     public class TweetDetailDto : Tweet
     {
-        public List<User> user;
+        public List<User> user { get; set; }
     }
 }
 

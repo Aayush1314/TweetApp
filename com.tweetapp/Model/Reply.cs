@@ -12,9 +12,7 @@ namespace com.tweetapp.Model
         public string reply { get; set; }
         public string replyDateTime { get; set; }
         public ObjectId refId { get; set; }
-        public ObjectId userId { get; set; }
-        public int likeCount { get; set; }
-        public string[] tags { get; set; }
+        public string username { get; set; }
     }
 }
 
